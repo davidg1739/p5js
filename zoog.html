@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>p5js Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+    
+    <script>
+        function setup() {
+            createCanvas(800,800) //creates the canvas the drawing is on
+        }
+
+        function draw() {
+        //makes a beige circle with a beige outline. The circle is the flash's face
+        fill(254,188,137); //fills the inside of the circle with the color beige 
+        stroke(254,188,137); //outlines the circle with the color beige  
+        ellipse(300,180,600,360); // creates a circle at the coordiantes (300,180) with a width of 600 and a height of 360
+        
+        //makes and outlines a rectangle with red for the body of the flash
+        stroke(175,0,0);// outlines the rectangle with red
+        fill(175,0,0); //fils the circle with red
+        rect(140,360,360,200); // makes a rectangle at the coordinates (140,360) with a width of 360 and a height of 200
+        
+        // makes four lines with a certain width of 5
+        strokeWeight(5); //determines the width of the lines below it
+        line(143,550,140,800); // makes a line with a point at the coordinates of the first two numers and another point at the last two numbers
+        line(180,550,180,800); // makes a line at the coordinates following the same rules as above with the coordinates
+        line(498,550,498,800); // makes a line at the coordinates following the same rules as above with the coordinates
+        line(450,550,450,800); // makes a line at the coordinates following the same rules as above with the coordinates
+        
+        // makes a circle with a white center but with a gold border
+        fill("white"); //fills a circle with white
+        stroke(249,179,0); //makes the border of the circle gold
+        ellipse(300,460,190,190); // makes a circle with the coordinates at the first two numbers and with a width and height of 190
+        
+        // makes 3 gold squares and even though it says rect, because of the size I gave the rectangles of 30 width and 30 height
+        // the rectangles/squares are part of the thunderbolt in the next chunk of code
+        fill(249,179,0); // makes the rectangles below gold and also the thunderbolt in the next chunk of code
+        rect(205,500,30,30); // makes a rectangle at (205, 500) with a width and height of 30 which makes it a square
+        rect(255,470,30,30); // the same thing happens as it did above but at different coordinates. The first two numbers in the parentheses are the x and y coordinates the square shows up at
+        rect(305,440,30,30);// the same thing happens as it did above but at different coordinates. The first two numbers in the parentheses are the x and y coordinates the square shows up at
+        
+        // draws part of the thunderbolt
+        beginShape(); // tells the program where and when to start drawing the shape
+        // vertex is another word for edge so the two numbers in the parentheses are the x and y coordinates of the edge in each line of code that has vertex
+        // the inside of this shape is gold because it is still following the same fill gold code that we wrote above
+        vertex(400,390);
+        vertex(350,440);
+        vertex(380,440);
+        vertex(320,500);
+        vertex(355,500);
+        vertex(170,550);
+        endShape(); // tells the program where to stop drawing the shape
+        
+        // makes the facial features of the flash
+        stroke("black"); // makes the outline of the shapes below black
+        fill("black"); // fills the inside of the shapes black
+        ellipse(230,100,50,50); // makes one of the flash's eyes
+        ellipse(300,100,50,50); // makes the other eye
+        line(100,250,500,250); // makes the flash's mouth
+        textSize(32); //makes the text code below it size 32 
+        text("The Flash",350,550); // puts The Flash on the canvas at the coordinates (350,550)
+        rect(250,180,30,30); // makes the flash's nose
+        }
+    </script>
+</head>
+
+<body>
+    <div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/davidg1739/p5js/blob/gh-pages/FILENAME.html?footer=0"></script>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas0').remove());
+        });
+    </script>
+</body>
+
+</html>
