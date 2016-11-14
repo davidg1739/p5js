@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>p5js Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+    
+    <script>
+        // declares variables with the names color, size, shape, and transperency
+        var color;
+        var size;
+        var shape;
+        var  transperency;
+        
+        // this function runs once
+        function setup() { 
+            createCanvas(500,500); // creates a canvas that is 330 long in width and height
+        }
+        
+        // this function constantly runs
+        function draw() {
+            size = random(1,300); // makes the variable size equal a random nuber between 1 and 300
+            color = random(1,200); // makes the variable color equal a random nuber between 1 and 200
+            transperency = random(1,200); // makes the variable transperency equal a random nuber between 1 and 200
+        }
+        
+        // the code inside this function will only happen if you drag the mouse
+        function mouseDragged() { 
+            fill(color,color-150,color+150,transperency) // makes the circle below a random color
+            ellipse(mouseX,mouseY,size,size) // makes a circle at the coordinates of the mouse and makes the circles size random depending on the variable size
+        }
+        
+        // the code inside this function will only happens if you move the mouse
+        function mouseMoved() {
+            fill (color+180,110,color+50,transperency) // makes the rectangle below with a random color and transperency
+            rect(mouseX,mouseY,size,size) // makes the rectangle at the coordinates of the mouse with a random size
+        }
+        
+        // the code inside thus function only happens if you click the mouse
+        function mousePressed() {
+            stroke(color,110,50,transperency) // // makes the color of the lines below a random color with a random of transperency
+            strokeWeight(50) // makes the thickness of the lines below 50
+            line(0,0,mouseX,mouseY)// makes a line at those coordinates
+            line(width,0,mouseX,mouseY) // mouseX and mouseY are the coordinates of the mouse
+            line(width,height,mouseX,mouseY)
+            line(0,height,mouseX,mouseY)
+            strokeWeight(1) // makes the thickness of the lines and the shapes that are made in the future 1
+        }
+        
+        // the code inside the function only happens if a key is pressed/typed
+        function keyTyped() {
+  
+  // the code inside this conditional only happens if the key typed was c
+  if (key === 'c') {
+    clear(); // clears the canvas
+    
+    // the code inside the conditional only happens if the key typed was b
+  } else if (key === 'b') {
+    background(random(1,100),random(1,20),random(20,80)); // make the background a random color
+  }
+}
+    </script>
+</head>
+
+<body>
+    <div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/USERNAME/p5js/blob/gh-pages/FILENAME.html?footer=0"></script>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas0').remove());
+        });
+    </script>
+</body>
+
+
+</html>
