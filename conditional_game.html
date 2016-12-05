@@ -6,6 +6,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
 
     <script>
+    
+        // the chunk of code below declares variables
         var x;
         var y;
         var color1;
@@ -16,79 +18,106 @@
         var toggle;
         var xSpeed;
         var ySpeed;
-
+        
+        // the code inside this function only runs once
         function setup() {
-            createCanvas(1000, 600);
-            x = width / 2;
-            y = height / 2;
-            color = 0;
-            start = 1;
-            toggle = 0;
-            xSpeed = 5;
-            ySpeed = 5;
+            createCanvas(1000, 600); // creates the canvas the drawing is being done on
+            x = width / 2; // makes the variable x = half the width of the canvas
+            y = height / 2; // makes the variable y = half the height of the canvas
+            color = 0; // makes the variable color = 0
+            start = 1; // makes the variable start = 1
+            toggle = 0; // makes the variable toggle = 0
+            xSpeed = 5; // makes the variable xSpeed = 5
+            ySpeed = 5; // makes the variable ySpeed = 5
         }
-
+        
+        // the code inside this function runs constantly
         function draw() {
+            
+            // makes the variables x and y not go pass the width and height boundaries of the canvas
             x = constrain(x, 0, width);
             y = constrain(y, 0, height);
+            
+            // sets these variables to random numbers between 1 and 250
             color1 = random(1,250);
             color2 = random(1,250);
             color3 = random(1,250);
+            
+            // makes the variable key2 = the lowercase version of the key last pressed on the keyboard
             key2 = key.toLowerCase();
-            console.log(key2);
+            
+            // the code in the chunk below only runs if start is = to 1 which it is in the start
             if (start == 1) {
-                background(0)
-                textSize(10);
-                fill("red");
-                text("Press 's' to start and press one of these keys to get a shape:",10, height / 2) 
-                text("'c' or 'r'. Press the 'e' key to clear the canvas and then press the letter of the shape you were on. Use the arrow keys to move the shape and drag the shape around with your mouse to draw.", 10, height / 1.9);
+                background(0) // makes the bacground of the canvas black
+                textSize(10); // sets the size of the text to come
+                fill("red"); // sets the color of the text to come
+                text("Press 's' to start and press one of these keys to get a shape:",10, height / 2) // puts the text in the parenthesis at the coordinates 10,height/2
+                text("'c' or 'r'. Press the 'e' key to clear the canvas and then press the letter of the shape you were on. Use the arrow keys to move the shape and drag the shape around with your mouse to draw.", 10, height / 1.9); // does the same thing as above but with different text and coordinates which are the last two things in the parenthesis
             }
+            
+            // the code bleow only runs if the last key pressed was s
             if (key2 == 's') {
-                start = 0;
-                clear();
+                start = 0; // sets start to 0 so the previous if statement won't run
+                clear(); // clears the canvas
             }
+            
+            // the code in the chunk below only rus if the last key pressed was c
             if (key2 == 'c') {
-                toggle = 1;
+                toggle = 1; // sets the variable toggle to 1
             }
+            
+            // the code in the chunk below only runs if the last key pressed was r
             if (key2 == 'r') {
-                toggle = 2;
+                toggle = 2; // sets the variable toggle to 2
             }
+            
+            // the code below only runs if the laxst key pressed was 0
             if (key2 == 'e'){
-                clear()
-                key2 = 0
+                clear(); // clears the canvas
+                key2 = 0; // sets the last key pressed to 0 or nothing in this case because 0 is not being used
             }
+            
+            // the code in the chunk below only runs if toggle is = to 1 which it would be if the last key pressed was c
             if (toggle == 1) {
-                fill(color1,color2,color3)
-                ellipse(x, y, 50, 50);
+                fill(color1,color2,color3) // makes the circle below a random color using those color variables we saw before
+                ellipse(x, y, 50, 50); // makes a circle at the values of the variables x and y with a width and height of 50
 
             }
+            
+            // the code in the chunk below will only run if the above did not and toggle is = 2 whick means the last key pressed was r
             else if (toggle == 2) {
-                fill(color1,color2,color3);
-                rect(x, y, 100, 50);
+                fill(color1,color2,color3); // makes the rectangle below a random color using those color variables we saw before
+                rect(x, y, 100, 50); // makes a rectangle at the values of the variables x and y with a width pf 100 and a height of 50
             }
+            
+            // the chunk of code below checks what arrow key was pressed if one was even pressed at all
             if (keyIsDown(LEFT_ARROW)) {
-                x -= xSpeed;
+                x -= xSpeed; // makes x = x - xSpeed
                 clear();
 
             }
-
             else if (keyIsDown(RIGHT_ARROW)) {
-                x += xSpeed;
+                x += xSpeed; // makes x = x + xSpeed
                 clear();
             }
             else if (keyIsDown(UP_ARROW)) {
-                y -= ySpeed;
+                y -= ySpeed; // makes y = y - ySpeed
                 clear();
             }
             else if (keyIsDown(DOWN_ARROW)) {
-                y += ySpeed;
+                y += ySpeed; // makes y = y + ySpeed
                 clear();
             }
+            
         }
 
+        // the code in the chunk below will only run if the mouse is clicked and dragged.
         function mouseDragged() {
-            x = mouseX;
+            
+            //sets the variables x and y = to the moouse coordinates
+            x = mouseX; 
             y = mouseY;
+            
         }
     </script>
 </head>
