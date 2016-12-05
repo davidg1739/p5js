@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>p5js Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+
+    <script>
+        var x;
+        var y;
+        var color1;
+        var color2;
+        var color3;
+        var start;
+        var key2;
+        var toggle;
+        var xSpeed;
+        var ySpeed;
+
+        function setup() {
+            createCanvas(1000, 600);
+            x = width / 2;
+            y = height / 2;
+            color = 0;
+            start = 1;
+            toggle = 0;
+            xSpeed = 5;
+            ySpeed = 5;
+        }
+
+        function draw() {
+            x = constrain(x, 0, width);
+            y = constrain(y, 0, height);
+            color1 = random(1,250);
+            color2 = random(1,250);
+            color3 = random(1,250);
+            key2 = key.toLowerCase();
+            console.log(key2);
+            if (start == 1) {
+                background(0)
+                textSize(10);
+                fill("red");
+                text("Press 's' to start and press one of these keys to get a shape:",10, height / 2) 
+                text("'c' or 'r'. Press the 'e' key to clear the canvas and then press the letter of the shape you were on. Use the arrow keys to move the shape and drag the shape around with your mouse to draw.", 10, height / 1.9);
+            }
+            if (key2 == 's') {
+                start = 0;
+                clear();
+            }
+            if (key2 == 'c') {
+                toggle = 1;
+            }
+            if (key2 == 'r') {
+                toggle = 2;
+            }
+            if (key2 == 'e'){
+                clear()
+                key2 = 0
+            }
+            if (toggle == 1) {
+                fill(color1,color2,color3)
+                ellipse(x, y, 50, 50);
+
+            }
+            else if (toggle == 2) {
+                fill(color1,color2,color3);
+                rect(x, y, 100, 50);
+            }
+            if (keyIsDown(LEFT_ARROW)) {
+                x -= xSpeed;
+                clear();
+
+            }
+
+            else if (keyIsDown(RIGHT_ARROW)) {
+                x += xSpeed;
+                clear();
+            }
+            else if (keyIsDown(UP_ARROW)) {
+                y -= ySpeed;
+                clear();
+            }
+            else if (keyIsDown(DOWN_ARROW)) {
+                y += ySpeed;
+                clear();
+            }
+        }
+
+        function mouseDragged() {
+            x = mouseX;
+            y = mouseY;
+        }
+    </script>
+</head>
+
+<body>
+    <div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/davidg1739/p5js/blob/gh-pages/conditional_game.html?footer=0"></script>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas0').remove());
+        });
+    </script>
+</body>
+
+
+</html>
