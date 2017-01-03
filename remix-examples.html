@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>p5js Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+
+    <script>
+        // declares variables with the names next to var
+        var x; // this is the x coordinate of the ball
+        var y; // this is the y coordinate of the ball
+        var xSpeed; // this is the speed at which the ball goes from left to right
+        var ySpeed; // this is the speed at which the ball goes up and down
+        var runGame; // this is what determines if the game runs or not
+        var paddleX; // this is the x coordinate of the paddle
+        var paddleWidth; // determines the width of the padd;e
+        var rate; // is the rating of the game
+        var gameOver; // determines if the game is over
+        var score; // this is your score
+
+        function setup() {
+            createCanvas(600, 500); // creates the canvas which the game is going to be played on
+            x = random(800); // sets the ball's x coordinate to a number up to 800
+            y = random(100); // sets the ball's y coordinate to a number up to 800
+            xSpeed = random(5, 7); // sets the speed the ball goes from left to right to any number from 5 to 7
+            ySpeed = random(5, 7); // sets the speed the ball goes up and down to any number from 5 to 7
+            runGame = true; // makes it possible for the game to start
+            paddleX = 0; // sets the paddles x coordinates
+            paddleWidth = 100; //  the initial width of the paddle
+            rate = "Not Rated"; // in the beggining of the game the game is not rated
+            gameOver = false; // when the game starts the game is not overyet because the player has noot lost yet
+            score = 0; // the score starts at 0
+
+        }
+
+        function draw() {
+            text("Score: " + score, 20, 20); // tells the player their score on the canvas
+            paddleX = constrain(mouseX, 0, height); // makes the paddle not move beyond the borders of the canvas
+            noCursor(); // makes the cursor invisible
+            paddleWidth = constrain(paddleWidth, 2, 100) // the minumum width of the paddle is 2
+
+            if (runGame) { // if the game is still running the code beloew will run
+
+                clear(); // clears the canvas
+                pong(x, y); // cals the function pong with the arguments x and y which are variables
+                rect(paddleX, 475, paddleWidth, 10);
+                x += xSpeed;
+                y += ySpeed;
+                if (x <= 0 || x >= width) { // tests if the ball is beyond the borders from left to right
+                    xSpeed = xSpeed * -1; // if the condition above is true the speed of the ball becomes the negative version of itself
+                }
+                if (y <= 0) { // tests if the balls height is at the top of the canas
+                    ySpeed = ySpeed * -1; // makes the ball come down
+                }
+
+                if (x >= mouseX && x <= (mouseX + 100) && y >= 475) { // tests if the ball has hittem the paddle
+                    xSpeed += 1; // makes the ball speed up when 
+                    ySpeed += 1; // it hits the paddle
+                    //makes the ball bounce back up
+                    ySpeed = ySpeed * -1;
+                    xSpeed = xSpeed * -1;
+                    paddleWidth -= 2;
+                    score1(); // calls on the function score1 so all the code in the function wil run
+                }
+            }
+            else { // if the game is not running the code in the conditional will run
+                lost(); // cals on the function lost which means the user lost the game
+
+            }
+            if (y >= 560) { // if the ball goes down and does not hit the paddle the code below will run
+                runGame = !runGame; // the game will not run
+                y = 600; // the balls coodinates
+                x = 800; // are set to (800,600)
+
+            }
+        }
+
+        function pong(x, y) { // the function pong is declared with the parameters x and y
+            fill(0); // the ball becomes black
+            ellipse(x, y, 10, 10); // the ball shows up at the coordinates (x,y)
+
+        }
+
+        function lost() { //declares the function lost
+            fill(0); // makes the letters below black
+            textSize(50); // makes the size of the test below 50
+            textStyle(BOLD);
+            text("Game Over!", 50, height / 2); // tels the user they lost and the game is over
+            textSize(20);
+            text("Rate the game by pressing any number from 0 to 5", 50, height / 1.5);
+            gameOver = true;
+            noLoop(); // the code above does not constantly loop
+        }
+        // the function below only runs the code if the key typed was a number from 1 through 5 and if the game is over and the game hasnt been rated yet
+        function keyTyped() {
+            if ((key == 0 && gameOver && rate == "Not Rated") || (key == 1 && gameOver && rate == "Not Rated") || (key == 2 && gameOver && rate == "Not Rated") || (key == 3 && gameOver && rate == "Not Rated") || (key == 4 && gameOver && rate == "Not Rated") || (key == 5 && gameOver && rate == "Not Rated")) {
+                rate = key;
+                rater(rate);
+            }
+        }
+
+        function rater(rating) { // this is the function that does the rating
+            textSize(50); // sets the size of the text below to 50
+            textStyle(BOLD); // makes the text below bold
+            text("Rating: " + rating, 50, height / 3); // shows the users rating on the canvas in text
+            noLoop(); // makes sure the code doesn't loop
+        }
+
+        function score1() { // this function adds a point to your score
+            score++; // this adds 1 point to your score
+        }
+    </script>
+</head>
+
+<body>
+    <div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/dg1739/p5js/blob/gh-pages/remix-examples.html?footer=0"></script>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas0').remove());
+        });
+    </script>
+</body>
+
+
+</html>
