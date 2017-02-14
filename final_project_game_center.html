@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>p5js Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+
+    <script>
+        // declares variables with the names next to var
+        var x; // this is the x coordinate of the ball in pong
+        var y; // this is the y coordinate of the ball in pong
+        var xSpeed; // this is the speed at which the ball goes from left to right in pong
+        var ySpeed; // this is the speed at which the ball goes up and down in pong
+        var runGame; // this is what determines if the game runs or not in pong
+        var paddleX; // this is the x coordinate of the paddle in pong
+        var paddleWidth; // determines the width of the paddle in pong
+        var rate; // is the rating of the game in pong
+        var gameOver; // determines if the game is over in pong
+        var score; // this is your score in pong
+        var bubbles = []; // these are the bubbles in the bubble popper game
+        var bubblesPoppedNumber; // this is the number of bubbles you have popped
+        var game; // this is the game the user is playing
+        var riddle1; //  this is the first riddle in the riddle solver game
+        var riddle2; //  this is the second riddle in the riddle solver game
+        var riddle3; // this is the third riddle in the riddle solver game
+        var riddlesCorrect; // this thr number of riddles that the player has gotten correct
+
+        // everything in this function only happpens once
+        function setup() {
+            createCanvas(600, 500); // creates the canvas the games will be played on
+            confirm("Welcome to David's Game Center! Have fun!"); //  this is the intro to my game center
+            gameChooser(); // calls on the function gameChooser
+            x = random(800); // sets the ball's x coordinate to a number up to 800 in pong
+            y = random(100); // sets the ball's y coordinate to a number up to 00 in pong
+            xSpeed = random(5, 7); // sets the speed the ball goes from left to right to any number from 5 to 7 in pong
+            ySpeed = random(5, 7); // sets the speed the ball goes up and down to any number from 5 to 7 in pong
+            runGame = true; // makes it possible for the game to start in pong
+            paddleX = 0; // sets the paddles x coordinates in pong
+            paddleWidth = 100; //  the initial width of the paddle in pong
+            rate = "Not Rated"; // in the beggining of the game the game is not rated in pong
+            gameOver = false; // when the game starts the game is not overyet because the player has noot lost yet in pong
+            score = 0; // the score starts at 0 in pong
+            bubblesPoppedNumber = 0; // starts the number of bubbles popped at 0
+            
+            // initializes the riddle variables
+            riddle1 = 0;
+            riddle2 = 0;
+            riddle3 = 0;
+            riddlesCorrect = 0;
+        }
+
+        // everything in this function constantly happens
+        function draw() {
+            // the code inside this function will only occur if the game the user chose was bubble popper
+            if (game == "bubble popper") { // checks to see if the game the user chose is bubble popper
+                background(0); // makes the background black
+                bubblesPopped(); // calls on the function bubbles popped
+                for (i = 0; i < bubbles.length; i++) { // this loop only runs while i is less than the length of the array bubbles
+                    bubbles[i].move() // uses i as an index to do the movements for all the bubbles in the array bubbles
+                    bubbles[i].display() // uses i to display the bubbles
+                }
+            }
+            
+            // the code in the conditional below only runs if the game that the player chose is pong
+            if (game == "pong") { // checks if the game that the user chose is pong
+                text("Score: " + score, 20, 20); // tells the player their score on the canvas
+                paddleX = constrain(mouseX, 0, height); // makes the paddle not move beyond the borders of the canvas 
+                noCursor(); // makes the cursor invisible 
+                paddleWidth = constrain(paddleWidth, 2, 100) // the minumum width of the paddle is 2 
+
+                if (runGame) { // if the game is still running the code beloew will run
+
+                    clear(); // clears the canvas 
+                    pong(x, y); // cals the function pong with the arguments x and y which are variables
+                    rect(paddleX, 475, paddleWidth, 10); // makes the paddle
+                    x += xSpeed; // adds the value of xSpeed to x and makes the sum equal to x
+                    y += ySpeed; // adds the value of ySpeed to y and makes the sum equal to y
+                    if (x <= 0 || x >= width) { // tests if the ball is beyond the borders from left to right
+                        xSpeed = xSpeed * -1; // if the condition above is true the speed of the ball becomes the negative version of itself
+                    }
+                    if (y <= 0) { // tests if the balls height is at the top of the canvas
+                        ySpeed = ySpeed * -1; // makes the ball come down
+                    }
+
+                    if (x >= mouseX && x <= (mouseX + 100) && y >= 475) { // tests if the ball has hittem the paddle
+                        xSpeed += 1; // makes the ball speed up when 
+                        ySpeed += 1; // it hits the paddle
+                        //makes the ball bounce back up when it hits the paddle
+                        ySpeed = ySpeed * -1;
+                        xSpeed = xSpeed * -1;
+                        paddleWidth -= 2;
+                        score1(); // calls on the function score1 so all the code in the function will run. this shows the user their score
+                    }
+                }
+                else { // if the game is not running the code in the conditional will run 
+                    lost(); // calls on the function lost which means the user lost the game
+
+                }
+                if (y >= 560) { // if the ball goes down and does not hit the paddle the code below will run
+                    runGame = !runGame; // the game will not run
+                    y = 600; // the ball's coodinates
+                    x = 800; // are set to (800,600)
+
+                }
+            }
+            
+            // the code in the conditional below will only run if the game that the user chose is riddle solver
+            if (game == "riddle solver"){ // checks if the game that the user chose is riddle solver.
+                confirm("Type all the answers to the questions in lowercase!") // gives the user instructions which are in the quotation marks
+                riddle1 = prompt("What belongs to you but others use it more than you do?"); // asks the user for the answer to the first riddle
+                
+                // the code in the conditional below will only run if the user's answer to riddle 1 was 'your name'
+                if (riddle1 == "your name"){ // checks if the user got the riddle correct
+                    riddlesCorrect++; // adds 1 to the amount of riddles the player/user has gotten correct
+                }
+                
+                
+                riddle2 = prompt("What flies without wings?"); // asks the player for the answer to the second riddle
+                
+                
+                if (riddle2 == "time"){ // checks to see if the user got the second riddle correct and if so the code in this condtional will run
+                    riddlesCorrect++; // adds 1 to the amount of riddles the player/user has gotten correct
+                }
+                
+                
+                riddle3 = prompt("I don't have eyes, but once I did see. Once I had thoughts, but now I'm white and empty.") // asks the user for the answer to the third riddle
+                
+                
+                if (riddle3 == "skull"){ // checks if the user got the third riddle correct and if so, the code inside this function will run
+                    riddlesCorrect++;// adds 1 to the amount of riddles the player/user has gotten correct
+                }
+                
+                
+                riddlesSolved(); // calls on the function riddlesSolved
+            }
+            
+            
+        }
+
+        function Bubble() { // this is a special type of function called a class
+            this.x = random(width); // this makes the x coordinate of a bubble a random number up to the width of the canvas
+            this.y = constrain(random(height),0,height); // sets the y cordinate of a bubble a random number up to the height of the canvas
+
+            this.move = function() { // the code in this object will make the bubble move randomly
+                this.x += random(-1, 1); 
+                this.y += random(-2, 0);
+            }
+
+            this.display = function() { // this object displays the bubbles
+                stroke(255); // sets the border of the bubbles to white
+                noFill(); // makes the bubbles not be affected by the previous fill commands
+                ellipse(this.x, this.y, 50, 50); // makes the bubble
+            }
+        }
+
+        // the code inside this function below will only run if a key on the keyboard has been pressed
+        function keyPressed() {
+            if (game == "bubble popper") { // checks if the game is bubble popper and if so, the code in this conditional will run
+                if (key.toLowerCase() == "b") { // the code in the conditional below will only run if the player pressed B or b
+                    bubbles.push(new Bubble()); // adds a new bubble to the bubble array
+                }
+            }
+            if (game == "pong") { // checks if the game being played is pong
+                // the code in the conditional below wil only run if the key pressed was 0, 1, 2, 3, 4, or 5 and if the game is over and the game hasn't been rated yet
+                if ((key == 0 && gameOver && rate == "Not Rated") || (key == 1 && gameOver && rate == "Not Rated") || (key == 2 && gameOver && rate == "Not Rated") || (key == 3 && gameOver && rate == "Not Rated") || (key == 4 && gameOver && rate == "Not Rated") || (key == 5 && gameOver && rate == "Not Rated")) {
+                    rate = key; // makes the key the user pressed equal the rating they give the game
+                    rater(rate); // calls on the function rater with the variable rate as a argument
+                }
+            }
+        }
+
+        function pong(x, y) { // the function pong is declared with the parameters x and y for the game pong
+            fill(0); // the ball becomes black
+            ellipse(x, y, 10, 10); // the ball shows up at the coordinates (x,y)
+
+        }
+
+        function lost() { // declares the function lost in the game pong
+            fill(0); // makes the letters below black
+            textSize(50); // makes the size of the test below 50
+            textStyle(BOLD);
+            text("Game Over!", 50, height / 2); // tels the user they lost and the game is over
+            textSize(20);
+            text("Rate the game by pressing any number from 0 to 5", 50, height / 1.5); // tells the user how to rate the game
+            gameOver = true; // makes the game be over
+            noLoop(); // the code above does not constantly loop
+        }
+
+        function rater(rating) { // this is the function that does the rating in the game pong
+            textSize(50); // sets the size of the text below to 50
+            textStyle(BOLD); // makes the text below bold
+            text("Rating: " + rating, 50, height / 3); // shows the users rating on the canvas in text
+            noLoop(); // makes sure the code doesn't loop
+        }
+
+        function score1() { // this function adds a point to your score in the game pong
+            score++; // this adds 1 point to your score in the game pong
+        }
+
+        // the code in the function below will only run if the mouse was pressed
+        function mousePressed() {
+            if (game == "bubble popper" && bubbles.length > 0) { // checks to see if the game being played is bubble popper and if there is at least 1 bubble on the screen for the player to pop
+                    bubbles.splice(-1, 1); // pops the bubble
+                    bubblesPoppedNumber++; // adds 1 to the amount of bubbles popped
+                
+            }
+        }
+        
+        // the code in this function tells the user the amount of bubbles they have popped
+        function bubblesPopped(){
+            text("Bubbles Popped: " + bubblesPoppedNumber,50,50);
+        }
+        
+        // this function asks the user what game they want to play from David's game center
+        function gameChooser() {
+            game = prompt("What game do you want to play? Type one of these choices: 'riddle solver','pong', or 'bubble popper'");
+        }
+        
+        // this function tells the user the amount of riddles they have solved
+        function riddlesSolved(){
+            background(0);
+            textSize(50);
+            fill(255);
+            text("Riddles Solved: " + riddlesCorrect,width/4,height/2);
+            noLoop();
+        }
+    </script>
+</head>
+
+<body>
+    <div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/davidg1739/p5js/blob/gh-pages/final_project_game_center.html?footer=0"></script>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas').remove());
+        });
+    </script>
+</body>
+
+
+</html>
